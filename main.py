@@ -3,6 +3,7 @@ import logging as log
 from info import description, tags_metadata
 from fastapi import FastAPI
 from config import Config
+import router.auth as auth
 
 # Соединение с БД
 
@@ -14,6 +15,7 @@ app = FastAPI(
 )
 
 log.info("Start main server")
+app.include_router(auth.router)
 
 
 @app.get("/Health-Check")
