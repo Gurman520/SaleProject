@@ -6,3 +6,4 @@ router = APIRouter(
     tags=["claim"],
     responses={404: {"description": "Not found"}},
 )
+
