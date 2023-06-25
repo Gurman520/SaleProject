@@ -4,7 +4,8 @@ from info import description, tags_metadata
 from fastapi import FastAPI
 from config import Config
 import router.auth as auth
-import router.ad as ad
+import router.announcement as ad
+import router.comments as comment
 
 # Соединение с БД
 
@@ -19,6 +20,7 @@ log.info("Start main server")
 # Подключение эндпоинтов
 app.include_router(auth.router)
 app.include_router(ad.router)
+app.include_router(comment.router)
 
 
 @app.get("/Health-Check")
@@ -27,5 +29,13 @@ def ping():
     return {"Message": "OK"}
 
 
-if __name__ == "__main__":
+def main():
     uvicorn.run(app)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print('Неожиданное завершение программы из-за ошибки:')
+        print(e)

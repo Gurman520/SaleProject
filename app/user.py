@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from config import Config
-from fastapi import Depends
+from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
 from passlib.context import CryptContext
@@ -33,16 +33,27 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
     try:
         payload = jwt.decode(token, Config.SECRET_KEY, algorithms=[Config.ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
-            return None
+            raise credentials_exception
     except JWTError:
-        return None
+        raise credentials_exception
     user = us.get_user_for_email(username)
     if user is None:
-        return None
+        raise credentials_exception
+    if not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User is baned",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     return user
 
 

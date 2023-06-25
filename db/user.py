@@ -4,15 +4,22 @@ from db.db import create_session
 
 
 def get_user_for_email(email):
-    session = create_session()
-    user = session.query(User).filter(User.email == email).all()[0]
-    session.close()
+    try:
+        session = create_session()
+        user = session.query(User).filter(User.email == email).all()[0]
+        print(user)
+        session.close()
+    except:
+        return None
     return user
+
+
+def get_user_list():
+    pass
 
 
 def create_user(us: request.UserCreate, h_pass: str):
     session = create_session()
-    print(session)
     u = User(
         name=us.name,
         surname=us.surname,
@@ -23,3 +30,7 @@ def create_user(us: request.UserCreate, h_pass: str):
     session.commit()
 
     return session.query(User).filter(User.email == us.email).all()[0]
+
+
+def update_user_for_id(user_id):
+    pass

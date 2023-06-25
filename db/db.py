@@ -6,7 +6,6 @@ import db.tables as t
 SQLALCHEMY_DATABASE_URL = (
     f"postgresql+psycopg2://{Config.DB_USER}:{Config.DB_PASSWORD}@{Config.DB_HOST}:5432/{Config.DB_NAME}"
 )
-print(SQLALCHEMY_DATABASE_URL)
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 t.Base.metadata.create_all(engine)
@@ -17,3 +16,27 @@ session = sessionmaker(bind=engine)
 def create_session():
     global session
     return session()
+
+
+def start():
+    try:
+        sess = create_session()
+        c1 = t.Category(
+            name="Продажа",
+        )
+        c2 = t.Category(
+            name="Покупка",
+        )
+        c3 = t.Category(
+            name="Оказание услуг",
+        )
+        sess.add(c1)
+        sess.add(c2)
+        sess.add(c3)
+        sess.commit()
+    except:
+        print("Внесение изменений не требуется")
+        return
+
+
+start()

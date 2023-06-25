@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class announcement(BaseModel):
     id: int
-    category: str
+    category_id: int
     title: str
     price: int
     description: str
