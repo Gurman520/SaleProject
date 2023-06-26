@@ -5,7 +5,7 @@ import error
 class Category(BaseModel):
     id: int
     name: str
-    description: str
+    description: str = None
 
 
 class List_category(BaseModel):

@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.orm import sessionmaker
 from config import Config
 import db.tables as t
 
@@ -30,12 +30,15 @@ def start():
     try:
         sess = create_session()
         c1 = t.Category(
+            id=1,
             name="Продажа",
         )
         c2 = t.Category(
+            id=2,
             name="Покупка",
         )
         c3 = t.Category(
+            id=3,
             name="Оказание услуг",
         )
         sess.add(c1)

@@ -1,5 +1,5 @@
 from db.tables import Comments
-from db.db import create_session
+from db.init_db import create_session
 
 
 def get_comments_list(ad_id):

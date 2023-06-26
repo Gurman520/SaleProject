@@ -1,5 +1,4 @@
-from sqlalchemy import create_engine, MetaData, Table, Integer, String, \
-    Column, DateTime, ForeignKey, Numeric, Boolean, orm
+from sqlalchemy import Integer, String, Column, DateTime, ForeignKey, Boolean, orm
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 

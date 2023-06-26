@@ -1,6 +1,6 @@
 import router.request_class.ad as request_ad
 from db.tables import Announcement
-from db.db import create_session
+from db.init_db import create_session
 import error
 
 

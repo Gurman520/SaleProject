@@ -1,6 +1,6 @@
 import router.request_class.auth_class as request
 from db.tables import User
-from db.db import create_session
+from db.init_db import create_session
 
 
 def get_user_for_email(email):

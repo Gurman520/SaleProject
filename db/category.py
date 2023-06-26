@@ -1,5 +1,5 @@
 from db.tables import Category
-from db.db import create_session
+from db.init_db import create_session
 
 
 def get_category_for_id(id):

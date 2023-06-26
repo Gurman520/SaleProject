@@ -13,7 +13,7 @@ def get_category_list():
     list_cat = db.get_categories_list()
     l_categoris = list()
     for category in list_cat:
-        c = response.category(
+        c = response.Category(
             id=category.id,
             name=category.name,
             description=category.description,
