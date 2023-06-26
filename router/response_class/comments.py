@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+import error
 
 
 class Comment(BaseModel):
@@ -10,3 +11,7 @@ class Comment(BaseModel):
 
 class Comments(BaseModel):
     comments: list[Comment]
+
+
+class CommentsNotFound(BaseModel):
+    message: str

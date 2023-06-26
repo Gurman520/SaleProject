@@ -6,6 +6,7 @@ from config import Config
 import router.auth as auth
 import router.announcement as ad
 import router.comments as comment
+import router.category as category
 
 # Соединение с БД
 
@@ -21,6 +22,7 @@ log.info("Start main server")
 app.include_router(auth.router)
 app.include_router(ad.router)
 app.include_router(comment.router)
+app.include_router(category.router)
 
 
 @app.get("/Health-Check")

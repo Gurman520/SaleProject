@@ -1,11 +1,16 @@
 import db.announcement as db
+import db.category as db_cat
 from app.user import User
 import router.request_class.ad as request_ad
 import router.response_class.ad as response_ad
+import error
 
 
 def create_ad(ad: request_ad.add_new_ad, current_user: User):
-    new_ad = db.create_ad(ad, current_user.id, 1)
+    category = db_cat.get_category_for_id(ad.category_id)
+    if category is None:
+        return error.ErrNotFoundCategory
+    new_ad = db.create_ad(ad, current_user.id)
     print(new_ad)
     return new_ad
 
@@ -32,10 +37,19 @@ def get_ad(ad_id: str):
 
 def delete_ad(current_user: User, ad_id: str):
     ad = db.get_ad_for_id(int(ad_id))
-    if ad.user_id != current_user.id:
-        return None
+    if ad == error.ErrNotFoundAd:
+        return ad
+    if ad.user_id != current_user.id and not current_user.is_admin:
+        return error.ErrAccessDeniedAd
     return db.delete_ad(int(ad_id))
 
 
-def update_ad():
-    pass
+def update_ad(id: str, ad: request_ad.update_ad, current_user: User):
+    category = db_cat.get_category_for_id(ad.category_id)
+    if category is None:
+        return error.ErrNotFoundCategory
+    get_ad = db.get_ad_for_id(int(id))
+    if get_ad.user_id != current_user.id and not current_user.is_admin:
+        return None
+    up_ad = db.update_ad(id, ad)
+    return up_ad

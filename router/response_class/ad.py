@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+import error
 
 
 class announcement(BaseModel):
@@ -11,3 +12,7 @@ class announcement(BaseModel):
 
 class ad_list(BaseModel):
     announcements: list[announcement]
+
+
+class ErrorNotFoundAD(BaseModel):
+    message: str = error.ErrNotFoundAd

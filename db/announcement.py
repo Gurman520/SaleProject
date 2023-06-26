@@ -1,6 +1,7 @@
-import router.request_class.auth_class as request
+import router.request_class.ad as request_ad
 from db.tables import Announcement
 from db.db import create_session
+import error
 
 
 def get_ad_for_id(ad_id):
@@ -9,7 +10,7 @@ def get_ad_for_id(ad_id):
         ad = session.query(Announcement).filter(Announcement.id == ad_id).all()[0]
         session.close()
     except:
-        return None
+        return error.ErrNotFoundAd
     return ad
 
 
@@ -21,14 +22,14 @@ def get_ad_list():
     return ad
 
 
-def create_ad(ad, user_id, category_id):
+def create_ad(ad, user_id):
     session = create_session()
     new_ad = Announcement(
         title=ad.title,
         price=ad.price,
         description=ad.description,
         user_id=user_id,
-        category_id=category_id
+        category_id=ad.category_id
     )
     session.add(new_ad)
     session.commit()
@@ -47,6 +48,17 @@ def delete_ad(ad_id):
     return ad
 
 
-# Дописать структуру для обновления
-def update_ad(ad_id):
-    pass
+def update_ad(id: int, ad: request_ad.update_ad):
+    session = create_session()
+    get_ad = session.query(Announcement).filter(Announcement.id == id).one()
+    if ad.price is not None:
+        get_ad.price = ad.price
+    if ad.title is not None:
+        get_ad.title = ad.title
+    if ad.category_id is not None:
+        get_ad.category_id = ad.category_id
+    if ad.description is not None:
+        get_ad.description = ad.description
+    session.add(get_ad)
+    session.commit()
+    return session.query(Announcement).filter(Announcement.id == id).all()[0]
