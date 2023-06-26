@@ -14,11 +14,19 @@ session = sessionmaker(bind=engine)
 
 
 def create_session():
+    """
+    Функция создания сессии
+    :return: Сессия
+    """
     global session
     return session()
 
 
 def start():
+    """
+    Функция создания категорий при старте программы
+    :return:
+    """
     try:
         sess = create_session()
         c1 = t.Category(

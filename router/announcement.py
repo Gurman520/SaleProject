@@ -26,7 +26,7 @@ async def add_new_ad(ad: request_ad.add_new_ad, current_user: User = Depends(get
 
 @router.get("/announcement", response_model=response_ad.ad_list)
 async def get_list_ad(current_user: User = Depends(get_current_user)):
-    l_ad = app.get_list_ad(current_user)
+    l_ad = app.get_list_ad()
     return response_ad.ad_list(announcements=l_ad)
 
 

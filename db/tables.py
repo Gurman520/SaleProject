@@ -7,6 +7,9 @@ Base = declarative_base()
 
 
 class User(Base):
+    """
+    Класс - таблица Пользователь
+    """
     __tablename__ = 'user'
     id = Column(Integer(), primary_key=True)
     name = Column(String(100), nullable=False)
@@ -20,6 +23,9 @@ class User(Base):
 
 
 class Announcement(Base):
+    """
+    Класс - таблица Объявление
+    """
     __tablename__ = 'announcement'
     id = Column(Integer(), primary_key=True)
     category_id = Column(Integer, ForeignKey('category.id'))
@@ -34,6 +40,9 @@ class Announcement(Base):
 
 
 class Category(Base):
+    """
+    Класс - таблица Категория
+    """
     __tablename__ = 'category'
     id = Column(Integer(), primary_key=True)
     name = Column(String(50), nullable=False)
@@ -41,6 +50,9 @@ class Category(Base):
 
 
 class Comments(Base):
+    """
+    Класс - таблица Комментариев
+    """
     __tablename__ = 'comments'
     id = Column(Integer(), primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))

@@ -7,6 +7,12 @@ import error
 
 
 def create_ad(ad: request_ad.add_new_ad, current_user: User):
+    """
+    Функция создания объявления
+    :param ad: Класс содержащий информацию о новос объявлении
+    :param current_user: Пользователь
+    :return: Новое объявлние
+    """
     category = db_cat.get_category_for_id(ad.category_id)
     if category is None:
         return error.ErrNotFoundCategory
@@ -15,7 +21,11 @@ def create_ad(ad: request_ad.add_new_ad, current_user: User):
     return new_ad
 
 
-def get_list_ad(current_user: User):
+def get_list_ad():
+    """
+    Функция получения списка всех объявлений
+    :return: список из классов объявление
+    """
     l_ad = db.get_ad_list()
     l = list()
     for ad in l_ad:
@@ -31,11 +41,22 @@ def get_list_ad(current_user: User):
 
 
 def get_ad(ad_id: str):
+    """
+    Функция получения одного объявления по ID
+    :param ad_id: ID объявления
+    :return: объявление
+    """
     ad = db.get_ad_for_id(int(ad_id))
     return ad
 
 
 def delete_ad(current_user: User, ad_id: str):
+    """
+    Функция удаления объявления. Доступна только пользователю, который создал объявление и администратору.
+    :param current_user: Пользователь
+    :param ad_id: ID объявления
+    :return: удаленное объявление
+    """
     ad = db.get_ad_for_id(int(ad_id))
     if ad == error.ErrNotFoundAd:
         return ad
@@ -45,6 +66,13 @@ def delete_ad(current_user: User, ad_id: str):
 
 
 def update_ad(id: str, ad: request_ad.update_ad, current_user: User):
+    """
+    Функция обновления объявления. Доступно только пользователю и администратору
+    :param id: ID объявления
+    :param ad: параметры, которые необходимо обновить
+    :param current_user: Пользователь
+    :return: обновленное объявление
+    """
     category = db_cat.get_category_for_id(ad.category_id)
     if category is None:
         return error.ErrNotFoundCategory

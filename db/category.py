@@ -3,6 +3,11 @@ from db.db import create_session
 
 
 def get_category_for_id(id):
+    """
+    Функция получения категории из БД
+    :param id: ID категории
+    :return: Категория
+    """
     try:
         session = create_session()
         category = session.query(Category).filter(Category.id == id).all()[0]
@@ -13,6 +18,10 @@ def get_category_for_id(id):
 
 
 def get_categories_list():
+    """
+    Функция получения списка категорий из БД
+    :return: Список категорий
+    """
     session = create_session()
     categories = session.query(Category).all()
     session.close()
@@ -20,6 +29,11 @@ def get_categories_list():
 
 
 def create_category(new_category):
+    """
+    Функция создания категории в БД
+    :param new_category: Параметры новой категории
+    :return: Категория
+    """
     session = create_session()
     new_cat = Category(
         name=new_category.name,
@@ -32,6 +46,11 @@ def create_category(new_category):
 
 
 def delete_category(id):
+    """
+    Функция удаления категории из БД
+    :param id: ID категории
+    :return: Категория
+    """
     try:
         session = create_session()
         category = session.query(Category).filter(Category.id == id).one()

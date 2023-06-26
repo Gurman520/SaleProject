@@ -22,6 +22,12 @@ class User(BaseModel):
 
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
+    """
+    Функция создания токена доступа.
+    :param data: Словарь с данными о пользователе
+    :param expires_delta: Время жизни токена
+    :return: Токен
+    """
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -33,6 +39,11 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
+    """
+    Функция проверки валидности токена доступа
+    :param token: Токен
+    :return: Пользователь
+    """
     # Добавить проверку времени токена
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -59,14 +70,30 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 
 
 def get_password_hash(password):
+    """
+    Функция хэширования пароля при регистрации
+    :param password: Текст пароля
+    :return: Хэшированный пароль
+    """
     return pwd_context.hash(password)
 
 
 def verify_password(plain_password, hashed_password):
+    """
+    Функция проверки ввденного пароля и хэшированного из БД
+    :param plain_password: Введенный пароль
+    :param hashed_password: Хэшированный пароль
+    :return:True | False
+    """
     return pwd_context.verify(plain_password, hashed_password)
 
 
 def create(user):
+    """
+    Функция создания пользователя в системе и получения Токена
+    :param user: Информация о пользователе
+    :return: Токен
+    """
     get_user = us.get_user_for_email(user.email)
     if get_user is not None:
         return None
@@ -79,6 +106,11 @@ def create(user):
 
 
 def login(form_data):
+    """
+    Функция получения токена пользователя по Login и Password
+    :param form_data: Информация с формы заполнения
+    :return: Токен
+    """
     get_user = us.get_user_for_email(form_data.username)
     if get_user is None:
         return None

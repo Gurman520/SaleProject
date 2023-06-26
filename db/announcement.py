@@ -5,6 +5,11 @@ import error
 
 
 def get_ad_for_id(ad_id):
+    """
+    Функция получения объявления по ID из БД
+    :param ad_id: ID объявления
+    :return: Объявление
+    """
     try:
         session = create_session()
         ad = session.query(Announcement).filter(Announcement.id == ad_id).all()[0]
@@ -15,6 +20,10 @@ def get_ad_for_id(ad_id):
 
 
 def get_ad_list():
+    """
+    Функция получения списка объявлений из БД
+    :return: Список объявления
+    """
     # Добавить фильтрацию
     session = create_session()
     ad = session.query(Announcement).all()
@@ -23,6 +32,12 @@ def get_ad_list():
 
 
 def create_ad(ad, user_id):
+    """
+    Функция создания объявления в БД
+    :param ad: Объявление
+    :param user_id: ID пользователя
+    :return: Cjplfyyjt j,]zdktybt
+    """
     session = create_session()
     new_ad = Announcement(
         title=ad.title,
@@ -38,6 +53,11 @@ def create_ad(ad, user_id):
 
 
 def delete_ad(ad_id):
+    """
+    Функция удаления объявления по ID из БД
+    :param ad_id: ID объявления
+    :return: Удаленное объявление
+    """
     try:
         session = create_session()
         ad = session.query(Announcement).filter(Announcement.id == ad_id).one()
@@ -49,6 +69,12 @@ def delete_ad(ad_id):
 
 
 def update_ad(id: int, ad: request_ad.update_ad):
+    """
+    Функция обновления объявления по ID из БД
+    :param id: ID объявления
+    :param ad: Параметры объявления
+    :return: Обновленное объявление
+    """
     session = create_session()
     get_ad = session.query(Announcement).filter(Announcement.id == id).one()
     if ad.price is not None:
