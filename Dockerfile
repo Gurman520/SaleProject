@@ -10,7 +10,7 @@ RUN apt -y install python3-pip
 RUN git clone https://github.com/Gurman520/SaleProject.git
 
 # Setup
-RUN cd ./SaleProject && git checkout develop && pip3 install psycopg2-binary && pip3 install -r requirements.txt && cd ..
+RUN cd ./SaleProject && pip3 install psycopg2-binary && pip3 install -r requirements.txt && cd ..
 
 # copy project
 RUN cp -r ./SaleProject/. .
