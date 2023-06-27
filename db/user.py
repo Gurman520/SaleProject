@@ -38,9 +38,44 @@ def create_user(us: request.UserCreate, h_pass: str):
     return session.query(User).filter(User.email == us.email).all()[0]
 
 
-def update_user_for_id(user_id):
-    pass
+def update_user_for_id(id, up_user):
+    session = create_session()
+    get_user = session.query(User).filter(User.id == id).one()
+    if up_user.name is not None:
+        get_user.name = up_user.name
+    if up_user.surname is not None:
+        get_user.surname = up_user.surname
+    if up_user.email is not None:
+        get_user.email = up_user.email
+    session.add(get_user)
+    session.commit()
+    return session.query(User).filter(User.id == id).all()[0]
+
+
+def update_user_for_id_admin(id, up_user):
+    session = create_session()
+    get_user = session.query(User).filter(User.id == id).one()
+    if up_user.is_admin is not None:
+        get_user.is_admin = up_user.is_admin
+    if up_user.is_active is not None:
+        get_user.is_active = up_user.is_active
+    session.add(get_user)
+    session.commit()
+    return session.query(User).filter(User.id == id).all()[0]
 
 
 def get_user_list():
-    pass
+    session = create_session()
+    user = session.query(User).all()[0]
+    session.close()
+    return user
+
+
+def get_user_for_id(id):
+    try:
+        session = create_session()
+        user = session.query(User).filter(User.id == id).all()[0]
+        session.close()
+    except:
+        return None
+    return user

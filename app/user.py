@@ -1,11 +1,15 @@
+import logging as log
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
+import error
 from config import Config
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
 from passlib.context import CryptContext
 import db.user as us
+import router.response_class.user as response
+import router.request_class.user as request
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth")
 
@@ -124,3 +128,50 @@ def login(form_data):
     access_token_expires = timedelta(minutes=Config.ACCESS_TOKEN_EXPIRE_MINUTES)
     token = create_access_token(data={"sub": get_user.email}, expires_delta=access_token_expires)
     return token
+
+
+def get_user_list(current_user: User):
+    list_user = us.get_user_list()
+    l_user = list()
+    if current_user.is_admin:
+        for user in list_user:
+            u = response.User(
+                id=user.id,
+                name=user.name,
+                surname=user.surname,
+                email=user.email,
+                is_admin=user.is_admin,
+                is_active=user.is_active,
+            )
+            l_user.append(u)
+    else:
+        for user in list_user:
+            u = response.User(
+                id=user.id,
+                name=user.name,
+                surname=user.surname,
+                email=user.email,
+            )
+            l_user.append(u)
+    return l_user
+
+
+def get_user_for_id(id: str, current_user: User):
+    user = us.get_user_for_id(int(id))
+    if user is None:
+        return error.ErrNotFoundUser
+    return user
+
+
+def update_user(id: str, update_user: request.update_user, current_user: User):
+    user = us.get_user_for_id(int(id))
+    if user is None:
+        return error.ErrNotFoundUser
+    if user.id != current_user.id and not current_user.is_admin:
+        log.error("Update User - ErrAccessDeniedUser")
+        return error.ErrAccessDeniedUser
+    if current_user.is_admin:
+        user = us.update_user_for_id_admin(int(id), update_user)
+    user = us.update_user_for_id(int(id), update_user)
+    log.info("Update User - finish")
+    return user

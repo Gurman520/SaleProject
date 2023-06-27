@@ -14,4 +14,4 @@ class Comments(BaseModel):
 
 
 class CommentsNotFound(BaseModel):
-    message: str
+    message: str = error.ErrNotFoundComments
