@@ -3,7 +3,7 @@
   "info": {
     "title": "Service for placing ads",
     "description": "\nСервис по размещению объявлений\n",
-    "version": "0.0.1"
+    "version": "0.1.0"
   },
   "paths": {
     "/v1/auth/login": {
@@ -134,6 +134,16 @@
           },
           "404": {
             "description": "Not found"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -171,6 +181,16 @@
           },
           "404": {
             "description": "Not found"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -225,6 +245,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorNotFoundAD"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
                 }
               }
             }
@@ -294,6 +324,16 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
             "content": {
@@ -349,6 +389,26 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorAccessDenied"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
             "content": {
@@ -397,6 +457,16 @@
           },
           "404": {
             "description": "Not found"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -448,6 +518,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CommentsNotFound"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
                 }
               }
             }
@@ -512,6 +592,16 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
             "content": {
@@ -550,6 +640,16 @@
           },
           "404": {
             "description": "Not found"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -594,6 +694,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorAuth"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
                 }
               }
             }
@@ -665,6 +775,207 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get User List",
+        "operationId": "get_user_list_v1_user_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserList"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/user/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get User",
+        "operationId": "get_user_v1_user__id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update User",
+        "operationId": "update_user_v1_user__id__put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/update_user"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessDeniedUser"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
             "content": {
@@ -702,6 +1013,17 @@
   },
   "components": {
     "schemas": {
+      "AccessDeniedUser": {
+        "title": "AccessDeniedUser",
+        "type": "object",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string",
+            "default": "access to the user is denied"
+          }
+        }
+      },
       "Add_comment": {
         "title": "Add_comment",
         "required": [
@@ -760,8 +1082,7 @@
         "title": "Category",
         "required": [
           "id",
-          "name",
-          "description"
+          "name"
         ],
         "type": "object",
         "properties": {
@@ -825,14 +1146,12 @@
       },
       "CommentsNotFound": {
         "title": "CommentsNotFound",
-        "required": [
-          "message"
-        ],
         "type": "object",
         "properties": {
           "message": {
             "title": "Message",
-            "type": "string"
+            "type": "string",
+            "default": "comment not found"
           }
         }
       },
@@ -844,6 +1163,17 @@
             "title": "Message",
             "type": "string",
             "default": "category not found"
+          }
+        }
+      },
+      "ErrorAccessDenied": {
+        "title": "ErrorAccessDenied",
+        "type": "object",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string",
+            "default": "access to the ad is denied"
           }
         }
       },
@@ -868,6 +1198,17 @@
             "title": "Message",
             "type": "string",
             "default": "announcement not found"
+          }
+        }
+      },
+      "ErrorUNAUTHORIZED": {
+        "title": "ErrorUNAUTHORIZED",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "string",
+            "default": "Could not validate credentials"
           }
         }
       },
@@ -931,6 +1272,44 @@
           }
         }
       },
+      "User": {
+        "title": "User",
+        "required": [
+          "id",
+          "name",
+          "surname",
+          "email",
+          "is_admin",
+          "is_active"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "surname": {
+            "title": "Surname",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "is_admin": {
+            "title": "Is Admin",
+            "type": "boolean"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          }
+        }
+      },
       "UserCreate": {
         "title": "UserCreate",
         "required": [
@@ -956,6 +1335,33 @@
           "password": {
             "title": "Password",
             "type": "string"
+          }
+        }
+      },
+      "UserList": {
+        "title": "UserList",
+        "required": [
+          "users"
+        ],
+        "type": "object",
+        "properties": {
+          "users": {
+            "title": "Users",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "UserNotFound": {
+        "title": "UserNotFound",
+        "type": "object",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string",
+            "default": "user not found"
           }
         }
       },
@@ -1106,6 +1512,32 @@
           "description": {
             "title": "Description",
             "type": "string"
+          }
+        }
+      },
+      "update_user": {
+        "title": "update_user",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "surname": {
+            "title": "Surname",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "is_admin": {
+            "title": "Is Admin",
+            "type": "boolean"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
           }
         }
       }
