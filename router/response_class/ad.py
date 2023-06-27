@@ -16,3 +16,7 @@ class ad_list(BaseModel):
 
 class ErrorNotFoundAD(BaseModel):
     message: str = error.ErrNotFoundAd
+
+
+class ErrorAccessDenied(BaseModel):
+    message: str = error.ErrAccessDeniedAd

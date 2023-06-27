@@ -2,13 +2,13 @@ import uvicorn
 import logging as log
 from info import description, tags_metadata
 from fastapi import FastAPI
-from config import Config
 import router.auth as auth
 import router.announcement as ad
 import router.comments as comment
 import router.category as category
 
-# Соединение с БД
+log.basicConfig(level=log.INFO, filename="./server_log.log", filemode="a",
+                format="%(asctime)s %(levelname)s %(message)s")
 
 app = FastAPI(
     title="Service for placing ads",
@@ -31,13 +31,5 @@ def ping():
     return {"Message": "OK"}
 
 
-def main():
-    uvicorn.run(app)
-
-
 if __name__ == "__main__":
-    try:
-        main()
-    except Exception as e:
-        print('Неожиданное завершение программы из-за ошибки:')
-        print(e)
+    uvicorn.run(app)

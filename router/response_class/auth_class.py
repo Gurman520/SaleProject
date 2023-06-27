@@ -10,3 +10,6 @@ class Token(BaseModel):
 class ErrorAuth(BaseModel):
     message: str
 
+
+class ErrorUNAUTHORIZED(BaseModel):
+    detail: str = "Could not validate credentials"

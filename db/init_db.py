@@ -29,18 +29,23 @@ def start():
     """
     try:
         sess = create_session()
+        u1 = t.User(
+            name="admin",
+            surname="admin",
+            email="admin@admin.com",
+            password="$2b$12$Rll99f2IV3utn2mnJICGwuW5.yUcMyu0CW5r6siJ2PmcqSGjO9.TS",
+            is_admin=True,
+        )
         c1 = t.Category(
-            id=1,
             name="Продажа",
         )
         c2 = t.Category(
-            id=2,
             name="Покупка",
         )
         c3 = t.Category(
-            id=3,
             name="Оказание услуг",
         )
+        sess.add(u1)
         sess.add(c1)
         sess.add(c2)
         sess.add(c3)

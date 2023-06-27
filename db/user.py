@@ -12,7 +12,6 @@ def get_user_for_email(email):
     try:
         session = create_session()
         user = session.query(User).filter(User.email == email).all()[0]
-        print(user)
         session.close()
     except:
         return None
