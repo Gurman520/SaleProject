@@ -66,7 +66,7 @@ def update_user_for_id_admin(id, up_user):
 
 def get_user_list():
     session = create_session()
-    user = session.query(User).all()[0]
+    user = session.query(User).all()
     session.close()
     return user
 

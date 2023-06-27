@@ -43,3 +43,4 @@ def delete_comments(comm_id):
     comm = session.query(Comments).filter(Comments.id == comm_id).one()
     session.delete(comm)
     session.commit()
+    return comm

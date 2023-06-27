@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from config import Config
 import db.tables as t
+import logging as log
 
 SQLALCHEMY_DATABASE_URL = (
     f"postgresql+psycopg2://{Config.DB_USER}:{Config.DB_PASSWORD}@{Config.DB_HOST}:5432/{Config.DB_NAME}"
@@ -50,8 +51,9 @@ def start():
         sess.add(c2)
         sess.add(c3)
         sess.commit()
+        log.info("Внесение стартовых значений в БД - завершено")
     except:
-        print("Внесение изменений не требуется")
+        log.info("БД уже существует - Внесение изменений не требуется")
         return
 
 

@@ -131,6 +131,11 @@ def login(form_data):
 
 
 def get_user_list(current_user: User):
+    """
+    Функция получения списка всех пользователей
+    :param current_user: Пользователь
+    :return: Список пользоватлей
+    """
     list_user = us.get_user_list()
     l_user = list()
     if current_user.is_admin:
@@ -157,6 +162,12 @@ def get_user_list(current_user: User):
 
 
 def get_user_for_id(id: str, current_user: User):
+    """
+    Функция получения пользователя по ID
+    :param id: ID пользователя
+    :param current_user: Текущий пользователь
+    :return: Пользователь
+    """
     user = us.get_user_for_id(int(id))
     if user is None:
         return error.ErrNotFoundUser
@@ -164,6 +175,13 @@ def get_user_for_id(id: str, current_user: User):
 
 
 def update_user(id: str, update_user: request.update_user, current_user: User):
+    """
+    Функция обновления пользователя. Часть функционала доступна только админестратору
+    :param id: ID пользователя
+    :param update_user: Данные для обновления
+    :param current_user: Текущий пользователь
+    :return: Обновленный пользователь
+    """
     user = us.get_user_for_id(int(id))
     if user is None:
         return error.ErrNotFoundUser
